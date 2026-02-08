@@ -1,33 +1,43 @@
+from pathlib import Path
 from dotenv import load_dotenv
 import os
 from google import genai
 from google.genai import types
-from pathlib import Path
-
-load_dotenv()
-
 import pymongo
-
+import certifi
+import urllib.parse
+from pymongo.errors import PyMongoError
+ 
+ # load .env from script folder
 BASE_DIR = Path(__file__).resolve().parent
-load_dotenv(BASE_DIR / ".env")
+load_dotenv(BASE_DIR / ".env")   
 
 USER = os.getenv("MY_USERNAME")
 PWD = os.getenv("MY_PASSWORD")
-    
-myclient = pymongo.MongoClient(f"mongodb+srv://{USER}:{PWD}@cluster0.ze8mjac.mongodb.net/")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+DBNAME = os.getenv("MY_DB", "flamingo")
+
+
+pwd_enc = urllib.parse.quote_plus(PWD)
+uri = f"mongodb+srv://{USER}:{pwd_enc}@cluster0.prowd2l.mongodb.net/{DBNAME}?retryWrites=true&w=majority"
+myclient = pymongo.MongoClient(uri)
 mydb = myclient["flamingo"]
 mycol = mydb["searches"]
 
 
-client = genai.Client()
+if not (USER and PWD):
+    raise RuntimeError("Missing MY_USERNAME or MY_PASSWORD in .env")
+
+
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 # call function with arg1=word, arg2=sentence containing the word, arg3=definitions from wiktionary
-def askForContext(word, sentence, definitions_kofs):
+def askForContext(word, sentence, definitions):
     print("in askForContext")
     prompt = "Given this sentence: \"" + sentence + "\" \nand these definitions for the word " + word + ":"
 
-    for i in range(0, len(definitions_kofs)):
-        prompt += "\n\t" + str(i+1) + ") " + str(definitions_kofs[i][0])
+    for i in range(0, len(definitions)):
+        prompt += "\n\t" + str(i+1) + ") " + definitions[i]
 
     prompt += "\nReturn the index of the definition that makes the most sense for the word within the context of the sentence."
 
@@ -38,7 +48,8 @@ def askForContext(word, sentence, definitions_kofs):
         contents=prompt
     )
     
-    ind = int(response.text)-1
+    ind = int(response.text)
+
     
     mylist = [
     { "phrase": word, "definition": response.text},
@@ -51,7 +62,7 @@ def askForContext(word, sentence, definitions_kofs):
 
     print(x.inserted_ids)
 
-    return ind
+    return definitions[ind]
 
 def main():
     w = "tester"
@@ -59,5 +70,4 @@ def main():
     s = "In this sentence, this word is a tester"
     askForContext(w, s, d)
 
-if __name__ == "__main__":
-    main()
+main()
