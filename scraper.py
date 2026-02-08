@@ -43,7 +43,7 @@ class Definition:
         return self.__str__()
 
     def __str__(self):
-        return f"Usage: {self.usage}\n Definition: {self.definition}\n"
+        return f"Usage: \"{self.usage}\" Definition: \"{self.definition}\""
 
 
 # for separating word categories (ex. verb, noun)
@@ -160,5 +160,8 @@ def get_clean_text(tag):
     text = re.sub(r"\s+([.,;:!?\)\]\}]+)", r"\1", text)
     return text
 
-word = parse_definition("https://en.wiktionary.org/wiki/woke")
-print(word)
+def fetch_link(word):
+    return f"https://en.wiktionary.org/wiki/{word}"
+
+#word = parse_definition("https://en.wiktionary.org/wiki/woke")
+#print(word)
