@@ -1,57 +1,22 @@
 chrome.contextMenus.onClicked.addListener(example);
-var pastSearches = [];
+
+/*
+"word" => the word
+"usage" => the kind of owrd it is 
+"definition" => basic definition of the word
+"is_dialect" => whether or not the word is part of the dialetc
+*/
 //var LOCALHOST = "http://45.63.77.179:8000";
 LOCALHOST = "http://127.0.0.1:8000";
 let word = "default";
 let sentence = "This is the default sentence";
 
 function example(info) {
-  pastSearches.push(info.selectionText);
-  //console.log(pastSearches);
+    chrome.storage.local.set({"word": info.word});
+    //chrome.storage.lcoal.set({"use": info.usage});
+    //chrome.storage.local.set({"def": info.definition});
+    //chrome.storage.local.set({"dialect": info.is_dialect});
 }
-
-function stat(response) {
-  console.log(response.status);
-  if (response.status >= 200 && response.status < 400) {
-    return Promise.resolve(response);
-  } else {
-    return Promise.reject(new Error(response.statusText));
-  }
-}
-
-function json(response) {
-  return response.json();
-}
-
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log("message received");
-  if (message && message.action === "sendDOMData") {
-    console.log("sendDOMData", message.data.word, message.data.sentence);
-    chrome.storage.local.set(
-      {
-        curr_word: message.data.word,
-        curr_sentence: message.data.sentence,
-      },
-      () => {
-        if (chrome.runtime.lastError) {
-          console.warn("storage.set error:", chrome.runtime.lastError);
-          sendResponse({
-            success: false,
-            error: chrome.runtime.lastError.message,
-          });
-        } else {
-          console.log("storage updated");
-          sendResponse({ success: true });
-        }
-      },
-    );
-    // Return true to indicate we'll call sendResponse asynchronously
-    return true;
-  } else {
-    // nothing to handle synchronously
-    return false;
-  }
-});
 
 chrome.runtime.onInstalled.addListener(async () => {
   console.log("onInstalled");

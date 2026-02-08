@@ -12,8 +12,9 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "js": ["content.js", "popup.js"]
     }
   ],
-  "permissions": ["contextMenus", "activeTab", "scripting", "storage"]
+  "permissions": ["contextMenus", "activeTab", "scripting", "storage"],
+  "host_permissions": ["http://45.63.77.179/*"]
 }
