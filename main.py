@@ -13,6 +13,7 @@ app = FastAPI()
 @app.post("/search/")
 def search(req: requestBody):
     # call scraper on word + sentence for context 
+    print(req.word, req.sentence)
     link = fetch_link(req.word)
     word: Word = parse_definition(link)
     def_kofs= []
@@ -25,7 +26,7 @@ def search(req: requestBody):
     c_kof = def_kofs[def_idx][1]
 
     print("in response: ", req.word, req.sentence)
-    
+
     return {
         "link" : link,
         "word" : req.word, # og word
