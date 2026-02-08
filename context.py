@@ -22,12 +22,12 @@ mycol = mydb["searches"]
 client = genai.Client()
 
 # call function with arg1=word, arg2=sentence containing the word, arg3=definitions from wiktionary
-def askForContext(word, sentence, definitions):
+def askForContext(word, sentence, definitions_kofs):
     print("in askForContext")
     prompt = "Given this sentence: \"" + sentence + "\" \nand these definitions for the word " + word + ":"
 
-    for i in range(0, len(definitions)):
-        prompt += "\n\t" + str(i+1) + ") " + definitions[i]
+    for i in range(0, len(definitions_kofs)):
+        prompt += "\n\t" + str(i+1) + ") " + str(definitions_kofs[i][0])
 
     prompt += "\nReturn the index of the definition that makes the most sense for the word within the context of the sentence."
 
@@ -38,7 +38,7 @@ def askForContext(word, sentence, definitions):
         contents=prompt
     )
     
-    ind = int(response.text)
+    ind = int(response.text)-1
     
     mylist = [
     { "phrase": word, "definition": response.text},
@@ -51,7 +51,7 @@ def askForContext(word, sentence, definitions):
 
     print(x.inserted_ids)
 
-    return definitions[ind]
+    return ind
 
 def main():
     w = "tester"
@@ -59,6 +59,5 @@ def main():
     s = "In this sentence, this word is a tester"
     askForContext(w, s, d)
 
-main()
-
-
+if __name__ == "__main__":
+    main()
