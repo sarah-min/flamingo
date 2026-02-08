@@ -1,17 +1,20 @@
 {
-    "name" : "Flamingo", 
-    "description" : "Lingo Definition and Etymology",
-    "version" : "1.0",
-    "manifest_version" : 3,
-    "action" : {
-        "default_popup": "page.html"
-    },
-    "background" : {
-        "service_worker": "background.js"
-    },
-    "content_scripts" : [{
-        "matches" : ["<all_urls>"],
-        "js" : ["content.js"]
-    }],
-    "permissions" : ["contextMenus", "activeTab", "scripting"]
+  "name": "Flamingo",
+  "description": "Lingo Definition and Etymology",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "page.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": ["contextMenus", "activeTab", "scripting"],
+  "host_permissions": ["http://45.63.77.179/*"]
 }

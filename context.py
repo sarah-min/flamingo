@@ -28,11 +28,11 @@ def askForContext(word, sentence, definitions_kofs):
 
     return ind
 
-def main():
-    w = "tester"
-    d = ["testtaker", "placeholder",  "cotton swab"]
-    s = "In this sentence, this word is a tester"
-    askForContext(w, s, d)
+# def main():
+#     w = "tester"
+#     d = ["testtaker", "placeholder",  "cotton swab"]
+#     s = "In this sentence, this word is a tester"
+#     askForContext(w, s, d)
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
