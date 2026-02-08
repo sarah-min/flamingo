@@ -1,43 +1,43 @@
 body {
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 header {
-    background-color: lightpink;
-    text-align: center;
-    margin: 0;
+  background-color: lightpink;
+  text-align: center;
+  margin: 0;
 }
 
-
 .title {
-    text-align: center;
-    font-size: 15vw;
-    font-family: 'Verdana', Courier, monospace;
-    padding-top: 30px;
+  text-align: center;
+  font-size: 15vw;
+  font-family: "Verdana", Courier, monospace;
+  padding-top: 30px;
 }
 
 .word {
-    text-align: center;
-    font-size: 10vw;
-    font-family: 'Verdana', Courier, monospace;
-    padding: 20px;
+  text-align: center;
+  font-size: 5vw;
+  font-family: "Verdana", Courier, monospace;
+  padding: 20px;
+  font-weight: bold;
 }
 
 .usage {
-    text-align: center;
-    font-size: 10vw;
-    font-family: 'Verdana', Courier, monospace;
-    padding: 20px;
+  text-align: center;
+  font-size: 5vw;
+  font-family: "Verdana", Courier, monospace;
+  padding: 20px;
 }
 
 .def {
-    text-align: center;
-    font-size: 10vw;
-    font-family: 'Verdana', Courier, monospace;
-    padding: 20px;
+  text-align: center;
+  font-size: 5vw;
+  font-family: "Verdana", Courier, monospace;
+  padding: 20px;
 }
