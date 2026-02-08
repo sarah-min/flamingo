@@ -110,7 +110,9 @@ def parse_definition(url) -> Word:
             if (text.startswith(parts)):
                 cat = text
 
-                if (len(kinds) == 0 or kinds[-1].category != None):
+                if (len(kinds) == 0):
+                    kinds.append(KindOfWord(cat, None, None))
+                elif (kinds[-1].category != None):
                     kinds.append(KindOfWord(cat, kinds[-1].etymology, None))
                 else:
                     kinds[-1].category = cat
