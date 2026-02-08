@@ -10,7 +10,7 @@ class requestBody(BaseModel):
 
 app = FastAPI()
 
-@app.get("/search/")
+@app.post("/search/")
 def search(req: requestBody):
     # call scraper on word + sentence for context 
     link = fetch_link(req.word)
@@ -24,6 +24,8 @@ def search(req: requestBody):
     c_def = def_kofs[def_idx][0]
     c_kof = def_kofs[def_idx][1]
 
+    print("in response: ", req.word, req.sentence)
+    
     return {
         "link" : link,
         "word" : req.word, # og word
